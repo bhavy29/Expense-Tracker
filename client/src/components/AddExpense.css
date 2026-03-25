@@ -1,0 +1,78 @@
+/* CONTAINER */
+.add-expense-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* CARD */
+.add-expense-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* TITLE */
+.form-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* GROUP */
+.form-group {
+  margin-bottom: 16px;
+}
+
+/* INPUTS & SELECT */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+  outline: none;
+  background: #ffffff;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* FOCUS */
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #9333ea;
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.12);
+}
+
+/* BUTTON */
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* BUTTON HOVER */
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(147, 51, 234, 0.35);
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+  .add-expense-card {
+    margin: 0 16px;
+  }
+}

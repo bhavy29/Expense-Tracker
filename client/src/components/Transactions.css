@@ -1,0 +1,48 @@
+.transactions-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.transactions-page h2 {
+  margin-bottom: 20px;
+}
+
+.transaction-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 20px;
+  margin-bottom: 12px;
+
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.transaction-left h4 {
+  margin-bottom: 4px;
+}
+
+.transaction-left p {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.transaction-right {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Income */
+.transaction-right.income {
+  color: #16a34a;
+}
+
+/* Expense */
+.transaction-right.expense {
+  color: #dc2626;
+}

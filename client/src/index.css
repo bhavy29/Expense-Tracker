@@ -1,0 +1,19 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* GLOBAL BACKGROUND */
+html,
+body,
+#root {
+  height: 100%;
+  background-color: #ffffff; /* PURE WHITE */
+  color: #111827; /* dark text for readability */
+  font-family: "Poppins", sans-serif;
+
+  /* Custom cursor */
+  /* cursor: url("cursor.png") 0 0, auto; */
+}
