@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { addExpense } from '../services/addExpense'
+import { addExpense } from '../../services/expenseService'
 import { useNavigate } from 'react-router-dom'
-import './AddExpense.css'
-import NavBar from './NavBar'
+import './Expenses.css'
+import NavBar from '../../components/NavBar/DashboardNavbar'
 
 const AddExpense = ({ onExpenseAdded }) => {
   const [form, setForm] = useState({

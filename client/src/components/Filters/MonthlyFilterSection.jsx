@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getMonthlyIncome, getCategoryWiseIncome } from '../services/incomeService'
-import { getMonthlyExpense, getCategoryWiseExpense } from '../services/addExpense'
-import { downloadMonthlyPDF, downloadYearlyPDF} from '../services/monthlyReport'
+import { getMonthlyIncome, getCategoryWiseIncome } from '../../services/incomeService'
+import { getMonthlyExpense, getCategoryWiseExpense } from '../../services/expenseService'
+import { downloadMonthlyPDF, downloadYearlyPDF} from '../../services/monthlyReport'
 import './MonthlyFilterSection.css'
 
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'

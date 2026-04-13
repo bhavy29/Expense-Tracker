@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
+import { exp } from '../../services/authService'
+import { deleteExpense } from '../../services/expenseService';
+import NavBar from '../../components/NavBar/DashboardNavbar'
 import './Expenses.css'
-import { exp } from '../services/authService'
-import { deleteExpense } from '../services/addExpense';
-
 
 const Expenses = () => {
     const [expenses, setExpenses] = useState([])

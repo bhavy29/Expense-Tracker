@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
-import { income } from '../services/incomeService'
-import { exp } from '../services/authService'
+import NavBar from '../../components/NavBar/DashboardNavbar'
+import { income } from '../../services/incomeService'
+import { exp } from '../../services/authService'
 import './Transactions.css'
 
 const Transactions = () => {

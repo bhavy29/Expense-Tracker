@@ -1,6 +1,6 @@
-import AddExpense from './AddExpense'
-import AddIncome from './AddIncome'
-import NavBar from './NavBar'
+import AddExpense from '../../features/expenses/AddExpense'
+import AddIncome from '../../features/income/AddIncome'
+import NavBar from './../../components/NavBar/DashboardNavbar'
 import './AddNew.css'
 
 const AddNew = () => {

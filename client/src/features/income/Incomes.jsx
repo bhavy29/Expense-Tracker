@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
-import './Expenses.css'
-import { income } from '../services/incomeService'
-import { deleteIncome } from '../services/incomeService';
+import NavBar from '../../components/NavBar/DashboardNavbar'
+import { income } from '../../services/incomeService'
+import { deleteIncome } from '../../services/incomeService';
+import './Income.css'
 
 const Incomes = () => {
   const [incomes, setIncomes] = useState([])

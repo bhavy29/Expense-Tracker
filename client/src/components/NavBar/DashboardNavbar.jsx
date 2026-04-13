@@ -1,11 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, NavLink } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
-import avatar from '../assets/avatar.webp'
-import logo from '../assets/logo6.png'
+import avatar from '../../assets/avatar.webp'
+import logo from '../../assets/logo6.png'
 import './NavBar.css'
-import { logout, getMe } from '../services/authService'
+import { logout, getMe } from '../../services/authService'
 
-const NavBar = () => {
+const DashboardNavbar = () => {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const menuRef = useRef(null)
@@ -45,10 +45,18 @@ const NavBar = () => {
 
       {/* CENTER */}
       <div className="nav-center">
-        <Link to="/dashboard">Overview</Link>
-        <Link to="/transactions">Transactions</Link>
-        <Link to="/addnew">Add Transaction</Link>
-        <Link to="/reports">Analytics</Link>
+        <NavLink to="/dashboard" className="nav-link">
+          Overview
+        </NavLink>  
+        <NavLink to="/transactions" className="nav-link">
+          Transactions
+        </NavLink>
+        <NavLink to="/addnew" className="nav-link">
+          Add Transaction
+        </NavLink>
+        <NavLink to="/budgets" className="nav-link">
+          Budgets
+        </NavLink>
       </div>
 
       {/* RIGHT */}
@@ -78,4 +86,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default DashboardNavbar

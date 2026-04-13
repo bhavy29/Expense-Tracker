@@ -1,15 +1,17 @@
 import { Routes, Route } from 'react-router-dom'
+import ProtectedRoute from './routes/ProtectedRoute'
+import LandingPage from './pages/LandingPage'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
-import AddExpense from './components/AddExpense'
-import Expenses from './components/Expenses'
-import ProtectedRoute from './routes/ProtectedRoute'
-import AddIncome from './components/AddIncome'
-import Incomes from './components/Incomes'
+import AddExpense from './features/expenses/AddExpense'
+import Expenses from './features/expenses/Expenses'
+import AddIncome from './features/income/AddIncome'
+import Incomes from './features/income/Incomes'
 import Profile from './pages/Profile'
-import AddNew from './components/AddNew'
-import Transactions from './components/Transactions'
+import AddNew from './features/transactions/AddNew'
+import Transactions from './features/transactions/Transactions'
+import BudgetCard from './components/BudgetCard'
 
 const App = () => {
 
@@ -17,7 +19,7 @@ const App = () => {
     <div>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Signup />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup />} />
 
@@ -86,6 +88,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Transactions />
+            </ProtectedRoute>
+          }
+        />'
+        <Route
+          path="/budgets"
+          element={
+            <ProtectedRoute>
+              <BudgetCard />
             </ProtectedRoute>
           }
         />

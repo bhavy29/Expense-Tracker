@@ -1,9 +1,8 @@
-import React from 'react'
 import { useState } from 'react'
-import { addIncome } from '../services/incomeService'
 import { useNavigate } from 'react-router-dom'
-import './AddExpense.css'
-import NavBar from './NavBar'
+import { addIncome } from '../../services/incomeService'
+import './Income.css'
+import NavBar from '../../components/NavBar/DashboardNavbar'
 
 const AddIncome = () => {
     const [form, setForm] = useState({

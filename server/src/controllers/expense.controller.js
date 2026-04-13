@@ -112,3 +112,62 @@ exports.categoryWiseExpense = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.last7DaysExpense = async (req, res) => {
+
+   try {
+  
+      const today = new Date();
+      today.setHours(23, 59, 59, 999);
+  
+      const last7Days = new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000);
+      last7Days.setHours(0, 0, 0, 0);
+  
+      const data = await Expense.aggregate([
+        {
+          $match: {
+            user: new mongoose.Types.ObjectId(req.user.id),
+            date: { $gte: last7Days, $lte: today }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: "%Y-%m-%d", date: "$date" }
+            },
+            totalExpense: { $sum: "$amount" }
+          }
+        },
+        {
+          $sort: { _id: 1 }
+        }
+      ])
+        
+      // Fill missing value with 0
+      const result = []
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(last7Days.getTime());
+        d.setDate(d.getDate() + i);
+  
+        if (isNaN(d)) {
+          console.log("Invalid date:", d);
+          continue;
+        }
+  
+        const formattedDate = d.toISOString().split("T")[0];
+  
+        const found = data.find(item => item._id === formattedDate);
+  
+        result.push({
+          date: formattedDate,
+          expense: found ? found.totalExpense : 0
+        })
+      }
+
+      res.status(200).json(result);
+    }
+    catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+}

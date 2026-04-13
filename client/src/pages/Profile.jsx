@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
+import { useNavigate } from 'react-router-dom'
+import NavBar from '../components/NavBar/DashboardNavbar'
 import { getMe } from '../services/authService'
 import { deleteUser } from '../services/user'
-import './Profile.css'
 import avatar from '../assets/avatar.webp'
-import { useNavigate } from 'react-router-dom'
+import './Profile.css'
 
 const Profile = () => {
   const navigate = useNavigate()

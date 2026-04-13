@@ -1,8 +1,8 @@
-import './StatCards.css'
 import { useEffect, useState, useRef } from 'react'
-import { exp } from '../services/authService'
-import { income } from '../services/incomeService'
+import { exp } from '../../services/authService'
+import { income } from '../../services/incomeService'
 import { useNavigate, Link } from 'react-router-dom'
+import './StatCards.css'
 
 
 const StatCards = () => {
