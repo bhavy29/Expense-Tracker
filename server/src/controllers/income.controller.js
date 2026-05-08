@@ -1,5 +1,7 @@
 const Income = require('../models/income.model')
 const mongoose = require('mongoose');
+const User = require('../models/user.model')
+const client = require('../db/cache')
 
 exports.addIncome = async (req, res) => {
   const { title, amount, category, date } = req.body
@@ -16,12 +18,26 @@ exports.addIncome = async (req, res) => {
     user: req.user.id
   })
 
+  await client.del('incomes');
   res.status(201).json(income)
 }
 
 exports.getIncomes = async (req, res) => {
-  const incomes = await Income.find({ user: req.user.id }).sort({ date: -1 })
-  res.json(incomes)
+
+  const user = await User.findById(req.user.id).select('-password')
+  const id = user.id
+
+  const cacheValue = await client.get('incomes');
+  if (cacheValue) {
+    console.log("Data from cache")
+    return res.json(JSON.parse(cacheValue));
+  }
+
+  const data = await Income.find({ user: id });
+  await client.set('incomes', JSON.stringify(data))
+  await client.expire('incomes', 60 * 60) // expire in one hour
+
+  res.json(data);
 }
 
 exports.deleteIncome = async (req, res) => {
@@ -37,6 +53,7 @@ exports.deleteIncome = async (req, res) => {
       });
     }
 
+    await client.del('incomes');
     res.status(200).json({
       message: 'Income deleted successfully'
     });

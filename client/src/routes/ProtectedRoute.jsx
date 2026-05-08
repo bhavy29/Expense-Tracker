@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
   }, [])
 
   if (loading) return <p>Loading...</p>
-
+  
   if (!authenticated) return <Navigate to="/login" replace />
 
   return children

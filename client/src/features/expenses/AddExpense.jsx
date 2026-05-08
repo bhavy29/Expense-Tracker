@@ -27,14 +27,22 @@ const AddExpense = ({ onExpenseAdded }) => {
     e.preventDefault()
 
     try {
-      const res = await addExpense(form)
+      const res = await addExpense({
+        ...form,
+        amount: Number(form.amount)
+      })
+
       console.log('New Expense added')
 
+      // Optional callback
+      if (onExpenseAdded) {
+        onExpenseAdded(res.data)
+      }
+
+      navigate('/dashboard')
     } catch (error) {
       alert(error.response?.data?.message || 'Failed to add expense')
     }
-    navigate('/dashboard')
-
   }
 
   return (

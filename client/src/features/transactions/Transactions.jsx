@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/DashboardNavbar'
 import { income } from '../../services/incomeService'
-import { exp } from '../../services/authService'
+import { allExp } from '../../services/expenseService'
 import './Transactions.css'
 
 const Transactions = () => {
@@ -11,7 +11,7 @@ const Transactions = () => {
     const fetchData = async () => {
       try {
         const incomeRes = await income()
-        const expenseRes = await exp()
+        const expenseRes = await allExp()
 
         const incomeData = incomeRes.data.map(item => ({
           ...item,

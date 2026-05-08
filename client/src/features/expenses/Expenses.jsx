@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { exp } from '../../services/authService'
+import { allExp } from '../../services/expenseService'
 import { deleteExpense } from '../../services/expenseService';
 import NavBar from '../../components/NavBar/DashboardNavbar'
 import './Expenses.css'
@@ -11,7 +11,7 @@ const Expenses = () => {
     const [year, setYear] = useState(new Date().getFullYear());
 
     useEffect(() => {
-        exp().then(res => {
+        allExp().then(res => {
             setExpenses(res.data)
         })
     }, [])

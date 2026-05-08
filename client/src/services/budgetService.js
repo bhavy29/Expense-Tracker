@@ -7,3 +7,4 @@ const API = axios.create({
 
 export const setMonthlyBudget = (data) => API.post("/budget/setMonthlyBudget", data);
 export const getMonthlyBudget = (year, month) => API.get(`/budget/getMonthlyBudget/${year}/${month}`);
+export const updateMonthlyBudget = (data) => API.put("/budget/updateMonthlyBudget", data);

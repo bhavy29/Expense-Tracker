@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { exp } from '../../services/authService'
+import { allExp } from '../../services/expenseService'
 import { income } from '../../services/incomeService'
 import { useNavigate, Link } from 'react-router-dom'
 import './StatCards.css'
@@ -16,7 +16,7 @@ const StatCards = () => {
 
   useEffect(() => {
     // FETCH EXPENSES
-    exp().then(res => {
+    allExp().then(res => {
       const expenseTotal = res.data.reduce(
         (sum, item) => sum + Number(item.amount),
         0

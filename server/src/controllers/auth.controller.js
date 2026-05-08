@@ -41,7 +41,7 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // 🔐 Password Validation
+        // Password Validation
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
         if (!regex.test(password)) {
             return res.status(400).json({
@@ -50,7 +50,7 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // 🔒 Hash password
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
