@@ -3,43 +3,94 @@ const mongoose = require('mongoose');
 const User = require('../models/user.model')
 const client = require('../db/cache')
 
+// ADD
 exports.addIncome = async (req, res) => {
-  const { title, amount, category, date } = req.body
+  try {
+    const { title, amount, category, date } = req.body
 
-  if (!title || !amount || !category) {
-    return res.status(400).json({ message: 'All fields are required' })
+    if (!title || !amount || !category) {
+      return res.status(400).json({ message: 'Title, amount and category required' })
+    }
+
+    const income = await Income.create({
+      title,
+      amount,
+      category,
+      date,
+      user: req.user.id
+    })
+
+    // Clear all income caches of user
+    try {
+      const keys = await client.keys(`incomes:${req.user.id}:*`);
+      if (keys.length > 0) await client.del(...keys);
+      console.log("Cache cleared for user:", req.user.id);
+    } catch (cacheErr) {
+      console.warn("Cache clear failed on addIncome:", cacheErr.message);
+    }
+
+    res.status(201).json({
+      message: 'Income added successfully',
+      income
+    })
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
   }
-
-  const income = await Income.create({
-    title,
-    amount,
-    category,
-    date,
-    user: req.user.id
-  })
-
-  await client.del('incomes');
-  res.status(201).json(income)
 }
 
+// GET
 exports.getIncomes = async (req, res) => {
+  try {
+    const { month, year, category } = req.query;
 
-  const user = await User.findById(req.user.id).select('-password')
-  const id = user.id
+    const cacheKey = `incomes:${req.user.id}:${month || 'all'}:${year || 'all'}:${category || 'all'}`;
 
-  const cacheValue = await client.get('incomes');
-  if (cacheValue) {
-    console.log("Data from cache")
-    return res.json(JSON.parse(cacheValue));
+    // Check cache 
+    try{
+      const cacheValue = await client.get(cacheKey);
+      if (cacheValue) {
+        console.log("Data from cache")
+        return res.json(JSON.parse(cacheValue));
+      }
+    }catch(cacheErr){
+      console.warn("Cache read failed:", cacheErr.message);
+    }
+
+    console.log("Cache miss")
+
+    // Build query
+    const query = { user: req.user.id };
+
+    if(category){
+      query.category = category
+    }
+
+    if (month && year) {
+      const start = new Date(year, month - 1, 1);
+      const end = new Date(year, month, 1);
+      query.date = { $gte: start, $lt: end };
+    }
+
+    const indomes = await Income.find(query);
+
+    // Save to cache
+    try{
+      await client.set(cacheKey, JSON.stringify(indomes), 'EX', 60 * 60);
+    }catch(cacheErr){
+      console.warn("Cache write failed:", cacheErr.message);
+    }
+
+    res.json(indomes);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Server Error"
+    });
   }
-
-  const data = await Income.find({ user: id });
-  await client.set('incomes', JSON.stringify(data))
-  await client.expire('incomes', 60 * 60) // expire in one hour
-
-  res.json(data);
 }
 
+// DELETE
 exports.deleteIncome = async (req, res) => {
   try {
     const income = await Income.findOneAndDelete({
@@ -53,7 +104,14 @@ exports.deleteIncome = async (req, res) => {
       });
     }
 
-    await client.del('incomes');
+    // Clear the income cache for the user
+    try {
+      const keys = await client.keys(`incomes:${req.user.id}:*`);
+      if (keys.length > 0) await client.del(...keys);
+    } catch (cacheErr) {
+      console.warn("Cache clear failed on deleteIncome:", cacheErr.message);
+    }
+
     res.status(200).json({
       message: 'Income deleted successfully'
     });
@@ -65,7 +123,7 @@ exports.deleteIncome = async (req, res) => {
   }
 };
 
-
+// MONTHLY SUMMARY
 exports.monthlyIncomeSummary = async (req, res) => {
   const year = Number(req.query.year);
   const month = Number(req.query.month);

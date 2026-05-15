@@ -110,7 +110,6 @@ exports.addExpense = async (req, res) => {
       message: "Server Error"
     });
   }
-
 };
 
 // DELETE

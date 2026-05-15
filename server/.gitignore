@@ -27,3 +27,6 @@ Thumbs.db
 
 # Misc
 *.sw?
+
+seedExpense.js
+seedIncome.js
