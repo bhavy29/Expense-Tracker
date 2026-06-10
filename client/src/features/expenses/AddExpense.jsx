@@ -9,11 +9,10 @@ const AddExpense = ({ onExpenseAdded }) => {
     title: '',
     amount: '',
     category: 'Food',
-    date: ''
+    date: new Date().toISOString().split('T')[0]
   })
 
   const navigate = useNavigate()
-
 
   const handleChange = (e) => {
     setForm({

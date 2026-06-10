@@ -54,8 +54,8 @@ const DashboardNavbar = () => {
         <NavLink to="/addnew" className="nav-link">
           Add Transaction
         </NavLink>
-        <NavLink to="/budgets" className="nav-link">
-          Budgets
+        <NavLink to="/budget" className="nav-link">
+          Budget
         </NavLink>
       </div>
 

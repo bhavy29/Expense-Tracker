@@ -11,7 +11,7 @@ import Incomes from './features/income/Incomes'
 import Profile from './pages/Profile'
 import AddNew from './features/transactions/AddNew'
 import Transactions from './features/transactions/Transactions'
-import BudgetCard from './components/BudgetCard'
+import Budget from './pages/Budget'
 
 const App = () => {
 
@@ -92,10 +92,10 @@ const App = () => {
           }
         />'
         <Route
-          path="/budgets"
+          path="/budget"
           element={
             <ProtectedRoute>
-              <BudgetCard />
+              <Budget />
             </ProtectedRoute>
           }
         />

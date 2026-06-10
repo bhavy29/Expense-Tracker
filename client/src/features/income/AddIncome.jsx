@@ -9,7 +9,7 @@ const AddIncome = () => {
         title: '',
         amount: '',
         category: '',
-        date: ''
+        date: new Date().toISOString().split('T')[0]
     });
 
 

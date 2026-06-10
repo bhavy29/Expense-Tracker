@@ -1,6 +1,7 @@
 const Expense = require('../models/expense.model')
 const mongoose = require('mongoose');
 const User = require('../models/user.model')
+const Budget = require("../models/budget.model");
 const client = require('../db/cache')
 
 // GET 
@@ -16,17 +17,19 @@ exports.getExpense = async (req, res) => {
 
     // Check cache
     try {
+      console.log("User ID in getExpense:", req.user.id);
+      console.log("Cache Key:", cacheKey);
       const cacheValue = await client.get(cacheKey);
       if (cacheValue) {
-        console.log("Cache Hit:", cacheKey);
-        console.log("Data from cache");
+        console.log("Expense Cache Hit:", cacheKey);
+        console.log("Expense Data from cache");
         return res.json(JSON.parse(cacheValue));
       }
     } catch (cacheErr) {
       console.warn("Cache read failed, falling through to DB:", cacheErr.message);
     }
 
-    console.log("Cache Miss");
+    console.log("Expense Cache Miss");
 
     // Build query
     const query = { user: req.user.id };
@@ -88,12 +91,75 @@ exports.addExpense = async (req, res) => {
       date,
       user: req.user.id
     });
-    
+
+    const expenseDate = new Date(date || Date.now());
+
+    const month = expenseDate.getMonth() + 1;
+    const year = expenseDate.getFullYear();
+
+    // Update monthly budget
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "monthly",
+        month,
+        year
+      },
+      {
+        $inc: {
+          spent: amount
+        }
+      }
+    );
+
+    // Update category budget
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "category",
+        category,
+        month,
+        year
+      },
+      {
+        $inc: {
+          spent: amount
+        }
+      }
+    );
+
+    // Update weekly budget
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "weekly",
+        weekStart: { $lte: expenseDate },
+        weekEnd: { $gte: expenseDate }
+      },
+      {
+        $inc: {
+          spent: amount
+        }
+      }
+    );
+
     // Clear all expense caches of user
     try {
+      console.log("User ID in addExpense:", req.user.id);
       const keys = await client.keys(`expenses:${req.user.id}:*`);
-      if (keys.length > 0) await client.del(...keys);
-      console.log("Cache cleared for user:", req.user.id);
+
+      console.log("Keys before delete:", keys);
+
+      if (keys.length > 0) {
+        const deleted = await client.del(...keys);
+        console.log("Deleted count:", deleted);
+      }
+
+      const remainingKeys = await client.keys(`expenses:${req.user.id}:*`);
+      console.log("Remaining keys:", remainingKeys);
     } catch (cacheErr) {
       console.warn("Cache clear failed on addExpense:", cacheErr.message);
     }
@@ -126,9 +192,72 @@ exports.deleteExpense = async (req, res) => {
       });
     }
 
+    const expenseDate = new Date(expense.date);
+
+    const month = expenseDate.getMonth() + 1;
+    const year = expenseDate.getFullYear();
+
+    // Reduce Monthly budget
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "monthly",
+        month,
+        year
+      },
+      {
+        $inc: {
+          spent: -expense.amount
+        }
+      }
+    );
+
+    // REDUCE CATEGORY BUDGET
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "category",
+        category: expense.category,
+        month,
+        year
+      },
+      {
+        $inc: {
+          spent: -expense.amount
+        }
+      }
+    );
+
+    // REDUCE WEEKLY BUDGET
+
+    await Budget.findOneAndUpdate(
+      {
+        user: req.user.id,
+        type: "weekly",
+        weekStart: { $lte: expenseDate },
+        weekEnd: { $gte: expenseDate }
+      },
+      {
+        $inc: {
+          spent: -expense.amount
+        }
+      }
+    );
+
     try {
       const keys = await client.keys(`expenses:${req.user.id}:*`);
-      if (keys.length > 0) await client.del(...keys);
+
+      console.log("Delete Expense - Keys before delete:", keys);
+
+      if (keys.length > 0) {
+        const deleted = await client.del(...keys);
+        console.log("Delete Expense - Deleted count:", deleted);
+      }
+
+      const remainingKeys = await client.keys(`expenses:${req.user.id}:*`);
+      console.log("Delete Expense - Remaining keys:", remainingKeys);
     } catch (cacheErr) {
       console.warn("Cache clear failed on deleteExpense:", cacheErr.message);
     }

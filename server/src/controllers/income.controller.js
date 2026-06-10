@@ -3,6 +3,58 @@ const mongoose = require('mongoose');
 const User = require('../models/user.model')
 const client = require('../db/cache')
 
+// GET
+exports.getIncomes = async (req, res) => {
+  try {
+    const { month, year, category } = req.query;
+
+    const cacheKey = `incomes:${req.user.id}:${month || 'all'}:${year || 'all'}:${category || 'all'}`;
+
+    // Check cache 
+    try{
+      const cacheValue = await client.get(cacheKey);
+      if (cacheValue) {
+        console.log("Income Data from cache")
+        return res.json(JSON.parse(cacheValue));
+      }
+    }catch(cacheErr){
+      console.warn("Cache read failed:", cacheErr.message);
+    }
+
+    console.log("Income Cache miss")
+
+    // Build query
+    const query = { user: req.user.id };
+
+    if(category){
+      query.category = category
+    }
+
+    if (month && year) {
+      const start = new Date(year, month - 1, 1);
+      const end = new Date(year, month, 1);
+      query.date = { $gte: start, $lt: end };
+    }
+
+    const indomes = await Income.find(query);
+
+    // Save to cache
+    try{
+      await client.set(cacheKey, JSON.stringify(indomes), 'EX', 60 * 60);
+    }catch(cacheErr){
+      console.warn("Cache write failed:", cacheErr.message);
+    }
+
+    res.json(indomes);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Server Error"
+    });
+  }
+}
+
 // ADD
 exports.addIncome = async (req, res) => {
   try {
@@ -35,58 +87,6 @@ exports.addIncome = async (req, res) => {
     })
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
-  }
-}
-
-// GET
-exports.getIncomes = async (req, res) => {
-  try {
-    const { month, year, category } = req.query;
-
-    const cacheKey = `incomes:${req.user.id}:${month || 'all'}:${year || 'all'}:${category || 'all'}`;
-
-    // Check cache 
-    try{
-      const cacheValue = await client.get(cacheKey);
-      if (cacheValue) {
-        console.log("Data from cache")
-        return res.json(JSON.parse(cacheValue));
-      }
-    }catch(cacheErr){
-      console.warn("Cache read failed:", cacheErr.message);
-    }
-
-    console.log("Cache miss")
-
-    // Build query
-    const query = { user: req.user.id };
-
-    if(category){
-      query.category = category
-    }
-
-    if (month && year) {
-      const start = new Date(year, month - 1, 1);
-      const end = new Date(year, month, 1);
-      query.date = { $gte: start, $lt: end };
-    }
-
-    const indomes = await Income.find(query);
-
-    // Save to cache
-    try{
-      await client.set(cacheKey, JSON.stringify(indomes), 'EX', 60 * 60);
-    }catch(cacheErr){
-      console.warn("Cache write failed:", cacheErr.message);
-    }
-
-    res.json(indomes);
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Server Error"
-    });
   }
 }
 
@@ -153,6 +153,7 @@ exports.monthlyIncomeSummary = async (req, res) => {
   }
 };
 
+// CATEGORY WISE SUMMARY
 exports.categoryWiseIncome = async (req, res) => {
   const year = Number(req.query.year);
   const month = Number(req.query.month);
@@ -186,6 +187,7 @@ exports.categoryWiseIncome = async (req, res) => {
   }
 };
 
+// LAST 7 DAYS SUMMARY
 exports.last7daysIncome = async (req, res) => {
   try {
 

@@ -19,7 +19,3 @@ app.use('/income', require('./routes/income.routes'))
 app.use('/report', require('./routes/monthlyReport.route'))
 app.use('/budget', require('./routes/budget.routes'))
 module.exports = app;
-
-// const User = require('../src/models/user.model')
-// const authMiddleware = require('./middleware/auth.middleware');
-// const mongoose = require('mongoose');

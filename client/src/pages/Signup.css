@@ -152,3 +152,10 @@
   background: #f3fff7;
   box-shadow: 0 6px 15px rgba(0, 200, 150, 0.2);
 }
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}

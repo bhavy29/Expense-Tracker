@@ -6,6 +6,7 @@ import './Signup.css'
 
 const Signup = () => {
 
+  const [error, setError] = useState('')
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -19,11 +20,15 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     try {
       await signup(form)
       navigate('/dashboard')
     } catch (err) {
-      console.log(err)
+      setError(
+        err.response?.data?.message ||
+        "Something went wrong"
+      );
     }
   }
 
@@ -90,6 +95,7 @@ const Signup = () => {
               required
             />
           </div>
+          {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="btn">
             Sign Up
