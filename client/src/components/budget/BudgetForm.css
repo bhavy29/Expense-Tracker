@@ -1,0 +1,161 @@
+/* Full-screen modal backdrop */
+.budget-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Card */
+.budget-card {
+  width: 90%;
+  max-width: 500px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(59, 130, 246, 0.12);
+  animation: popup 0.25s ease;
+}
+
+/* Animation */
+@keyframes popup {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Heading */
+.budget-title {
+  color: #f8fafc;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.budget-subtitle {
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 0.95rem;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 14px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #64748b;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.form-group select option {
+  background: #1e293b;
+  color: white;
+}
+
+/* Submit Button */
+.budget-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6
+  );
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.budget-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #dc2626;
+  transform: rotate(90deg);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .budget-card {
+    width: 95%;
+    padding: 24px;
+  }
+
+  .budget-title {
+    font-size: 1.6rem;
+  }
+
+  .close-btn {
+    top: 15px;
+    right: 15px;
+  }
+}
