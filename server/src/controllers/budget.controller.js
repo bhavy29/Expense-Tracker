@@ -216,8 +216,10 @@ exports.getWeeklyBudget = async (req, res) => {
       type: "weekly",
       weekStart: { $lte: currentDate },
       weekEnd: { $gte: currentDate },
+      amount: { $ne: null },
     });
 
+    console.log("Weekly Budget:", budget);
     res.json(budget);
 
   } catch (err) {
