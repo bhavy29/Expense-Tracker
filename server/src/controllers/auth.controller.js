@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { oauth2client } = require("../utils/googleConfig")
 const axios = require('axios')
 
+// Generate JWT token
 const generateToken = (user) => {
     return jwt.sign(
         { id: user._id, email: user.email },
@@ -12,6 +13,7 @@ const generateToken = (user) => {
     );
 };
 
+// Send token in cookie
 const sendToken = (res, token) => {
     res.cookie('token', token, {
         httpOnly: true,

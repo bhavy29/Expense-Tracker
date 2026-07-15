@@ -17,20 +17,18 @@ const {
 // Protect all routes
 router.use(authMiddleware);
 
-
-// MONTHLY
+// Monthly
 router.post("/monthly", setMonthlyBudget);
 router.get("/monthly/:month/:year", getMonthlyBudget);
 
   
-// CATEGORY
+// Category
 router.post("/category", setCategoryBudget);
 router.get("/category/:month/:year", getCategoryBudgets);
 
 
-// WEEKLY
+// Weekly
 router.post("/weekly", setWeeklyBudget);
 router.get("/weekly", getWeeklyBudget);
-
 
 module.exports = router;

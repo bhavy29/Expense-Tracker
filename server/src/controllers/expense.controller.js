@@ -350,7 +350,7 @@ exports.last7DaysExpense = async (req, res) => {
     last7Days.setHours(0, 0, 0, 0);
 
     const data = await Expense.aggregate([
-      {
+      { 
         $match: {
           user: new mongoose.Types.ObjectId(req.user.id),
           date: { $gte: last7Days, $lte: today }

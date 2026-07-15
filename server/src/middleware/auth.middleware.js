@@ -1,33 +1,3 @@
-// const jwt = require('jsonwebtoken')
-
-// const authMiddleware = async (req, res, next) => {
-//   const token = req.cookies.token
-//   const data = JSON.parse(localStorage.getItem("user-info")); // token form google login
-
-//   if (!token) {
-//     return res.status(401).json({
-//       message: 'Not authenticated'
-//     })
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-//     // decoded = { id: user._id }
-//     req.user = {
-//       id: decoded.id
-//     }
-
-//     next()
-//   } catch (error) {
-//     return res.status(401).json({
-//       message: 'Invalid or expired token'
-//     })
-//   }
-// }
-
-// module.exports = authMiddleware
-
 const jwt = require('jsonwebtoken')
 
 const authMiddleware = (req, res, next) => {
