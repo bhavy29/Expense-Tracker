@@ -19,6 +19,15 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/health", async (req, res) => {
+  const mongoose = require("mongoose");
+
+  res.json({
+    server: "running",
+    mongoState: mongoose.connection.readyState,
+  });
+});
+
 app.use('/auth', require('./routes/auth.routes'))
 app.use('/user', require('./routes/user.routes'))
 app.use('/expenses', require('./routes/expense.routes'))
