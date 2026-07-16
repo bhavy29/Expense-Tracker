@@ -4,7 +4,7 @@ import API from "./api";
 
 export const getMonthlyBudget = async (month, year) => {
   const response = await API.get(
-    `/monthly/${month}/${year}`
+    `/budget/monthly/${month}/${year}`
   );
 
   return response.data;
@@ -14,7 +14,7 @@ export const getMonthlyBudget = async (month, year) => {
 
 export const getCategoryBudgets = async (month, year) => {
   const response = await API.get(
-    `/category/${month}/${year}`
+    `/budget/category/${month}/${year}`
   );
 
   return response.data;
@@ -24,7 +24,7 @@ export const getCategoryBudgets = async (month, year) => {
 
 export const getWeeklyBudget = async () => {
   const response = await API.get(
-    '/weekly'
+    '/budget/weekly'
   );
 
   return response.data;
@@ -34,7 +34,7 @@ export const getWeeklyBudget = async () => {
 
 export const setMonthlyBudget = async (data) => {
   const response = await API.post(
-    '/monthly',
+    '/budget/monthly',
     data
   );
 
@@ -45,7 +45,7 @@ export const setMonthlyBudget = async (data) => {
 
 export const setCategoryBudget = async (data) => {
   const response = await API.post(
-    '/category',
+    '/budget/category',
     data
   );
 
@@ -56,7 +56,7 @@ export const setCategoryBudget = async (data) => {
 
 export const setWeeklyBudget = async (data) => {
   const response = await API.post(
-    '/weekly',
+    '/budget/weekly',
     data
   );
 
