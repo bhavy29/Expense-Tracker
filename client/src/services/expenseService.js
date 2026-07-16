@@ -1,9 +1,4 @@
-import axios from 'axios'
-
-const API = axios.create({
-  baseURL: 'http://localhost:5000/expenses',
-  withCredentials: true
-})
+import API from "./api";
 
 export const allExp = () => API.get('/')
 export const addExpense = (data) => API.post('/', data)

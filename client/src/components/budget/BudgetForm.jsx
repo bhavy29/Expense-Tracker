@@ -55,7 +55,7 @@ const BudgetForm = ({ onClose }) => {
       budgetData.weekEnd = new Date(
         firstDayOfWeek.getTime() + 6 * 24 * 60 * 60 * 1000
       )
-
+      console.log("Budget Data:", budgetData)
       try {
         const res = await setWeeklyBudget(budgetData)
         alert(res.message || 'Budget set successfully!')

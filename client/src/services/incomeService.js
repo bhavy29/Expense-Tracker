@@ -1,9 +1,4 @@
-import axios from 'axios'
-
-const API = axios.create({
-  baseURL: 'http://localhost:5000/',
-  withCredentials: true
-})
+import API from "./api";
 
 export const addIncome = (data) => API.post('/income', data)
 export const income = () => API.get('/income')
