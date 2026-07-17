@@ -15,11 +15,13 @@ const generateToken = (user) => {
 
 // Send token in cookie
 const sendToken = (res, token) => {
-    res.cookie('token', token, {
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000,
     });
 };
 
@@ -153,10 +155,13 @@ exports.googleLogin = async (req, res) => {
 
         const token = generateToken(user);
 
-        res.cookie('token', token, {
+        const isProduction = process.env.NODE_ENV === "production";
+
+        res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax"
+            secure: isProduction,
+            sameSite: isProduction ? "None" : "Lax",
+            maxAge: 24 * 60 * 60 * 1000,
         });
 
         return res.status(200).json({
@@ -195,10 +200,10 @@ exports.getMe = async (req, res) => {
 
 // Logout Clear the token cookie
 exports.logout = (req, res) => {
-    res.clearCookie('token', {
+    res.clearCookie("token", {
         httpOnly: true,
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     });
 
     res.status(200).json({
