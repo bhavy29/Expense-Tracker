@@ -1,117 +1,442 @@
-* {
+/* ==========================================================================
+   Expense Tracker — Landing Page
+   Direction: "Private Ledger" — deep ink background, brass/gold accent,
+   serif display type for statements, monospace for figures (receipt/ledger
+   motif). Signature element: the stats section rendered as a torn ledger
+   strip with tabular monospace figures and a dashed rule, echoing a receipt.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:            #0A0D12;
+  --bg-raised:     #12161D;
+  --bg-raised-2:   #171C25;
+  --ink:           #F1EEE4;
+  --ink-muted:     #9297A1;
+  --ink-faint:     #565B65;
+  --gold:          #C9A961;
+  --gold-bright:   #E7C98A;
+  --emerald:       #3C7A67;
+  --rule:          rgba(201, 169, 97, 0.16);
+  --rule-strong:   rgba(201, 169, 97, 0.32);
+  --shadow-ambient: 0 40px 100px -30px rgba(0, 0, 0, 0.65);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'SF Mono', monospace;
+
+  --container: 1160px;
+  --gutter: clamp(24px, 5vw, 64px);
+}
+
+* { box-sizing: border-box; }
+
+.landing {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.landing section {
+  position: relative;
+  padding: clamp(72px, 10vw, 140px) var(--gutter);
+}
+
+.landing h1,
+.landing h2,
+.landing h3 {
+  font-family: var(--font-display);
+  font-weight: 450;
+  letter-spacing: -0.01em;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+  color: var(--ink);
 }
 
-body {
-  font-family: Arial, sans-serif;
+.landing p {
+  color: var(--ink-muted);
+  margin: 0;
 }
 
-/* BUTTON */
-.btn {
-  background: white;
-  color: #10b981;
-  padding: 12px 25px;
+:focus-visible {
+  outline: 1.5px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing * { animation: none !important; transition: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   Headline / Premium Statement
+   -------------------------------------------------------------------------- */
+
+.landing .headline {
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.landing .headline .mini-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 14px;
+  position: relative;
+}
+
+.landing .headline .mini-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.landing .headline h2 {
+  font-size: clamp(32px, 4.4vw, 54px);
+  line-height: 1.12;
+  max-width: 14ch;
+}
+
+.landing .headline > p {
+  font-size: 17px;
+  max-width: 42ch;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard showcase
+   -------------------------------------------------------------------------- */
+
+.landing .dashboard {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-top: 0;
+}
+
+.landing .dashboard img {
+  width: 100%;
+  display: block;
   border-radius: 10px;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg-raised);
+  box-shadow:
+    var(--shadow-ambient),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 -80px 140px -60px rgba(201, 169, 97, 0.14) inset;
+}
+
+/* --------------------------------------------------------------------------
+   Feature rows
+   -------------------------------------------------------------------------- */
+
+.landing .feature-row {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+  border-top: 1px solid var(--rule);
+}
+
+.landing .feature-row.reverse {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.landing .feature-row.reverse > img { order: -1; }
+
+.landing .feature-row > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.landing .feature-row span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--emerald);
+  background: rgba(60, 122, 103, 0.12);
+  border: 1px solid rgba(60, 122, 103, 0.35);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.landing .feature-row h2 {
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.2;
+}
+
+.landing .feature-row p {
+  font-size: 15.5px;
+  max-width: 34ch;
+}
+
+.landing .feature-row img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  background: var(--bg-raised);
+}
+
+/* --------------------------------------------------------------------------
+   Bento grid
+   -------------------------------------------------------------------------- */
+
+.landing .bento {
+  max-width: var(--container);
+  margin: 0 auto;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, minmax(140px, auto));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.landing .bento > div {
+  background: var(--bg-raised);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  transition: background 0.25s ease;
+}
+
+.landing .bento > div:hover {
+  background: var(--bg-raised-2);
+}
+
+.landing .bento h3 {
+  font-size: 20px;
+  font-weight: 450;
+}
+
+.landing .bento p {
+  font-size: 14px;
+}
+
+.landing .bento .large-card {
+  grid-column: span 2;
+  grid-row: span 2;
+  justify-content: space-between;
+}
+
+.landing .bento .large-card::before {
+  content: "◆";
+  color: var(--gold);
+  font-size: 13px;
+}
+
+.landing .bento .small-card {
+  grid-column: span 1;
+  align-items: flex-start;
+}
+
+.landing .bento .small-card h3 {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--gold-bright);
+}
+
+.landing .bento .wide-card {
+  grid-column: span 2;
+}
+
+/* --------------------------------------------------------------------------
+   Stats — "ledger strip" (signature element)
+   -------------------------------------------------------------------------- */
+
+.landing .stats {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  border-top: 1px dashed var(--rule-strong);
+  border-bottom: 1px dashed var(--rule-strong);
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.landing .stats > div {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.landing .stats > div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--rule);
+}
+
+.landing .stats h1 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-variant-numeric: tabular-nums;
+  color: var(--gold-bright);
+}
+
+.landing .stats p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Quote
+   -------------------------------------------------------------------------- */
+
+.landing .quote {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing .quote h2 {
+  font-style: italic;
+  font-size: clamp(24px, 3.2vw, 34px);
+  line-height: 1.5;
+  color: var(--ink);
+  position: relative;
+}
+
+.landing .quote h2::before {
+  content: "“";
+  display: block;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 64px;
+  color: var(--gold);
+  opacity: 0.5;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   CTA
+   -------------------------------------------------------------------------- */
+
+.landing .cta {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.landing .cta h2 {
+  font-size: clamp(28px, 3.6vw, 42px);
+}
+
+.landing .cta button {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #14110A;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
   border: none;
+  padding: 16px 40px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  box-shadow: 0 18px 40px -14px rgba(201, 169, 97, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
-  transform: scale(1.05);
+.landing .cta button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 48px -14px rgba(201, 169, 97, 0.7);
 }
 
-/* FEATURES */
-.features {
-  padding: 80px 20px;
+.landing .cta button:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.landing footer {
   text-align: center;
+  padding: 40px var(--gutter) 56px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--rule);
 }
 
-.feature-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
 
-.card {
-  width: 260px;
-  padding: 25px;
-  margin: 10px;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
+@media (max-width: 860px) {
+  .landing .feature-row,
+  .landing .feature-row.reverse {
+    grid-template-columns: 1fr;
+  }
+  .landing .feature-row.reverse > img { order: 0; }
 
-.card:hover {
-  transform: translateY(-10px);
-}
+  .landing .bento {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+  .landing .bento .large-card,
+  .landing .bento .wide-card {
+    grid-column: span 2;
+  }
 
-/* HOW */
-.how {
-  background: #f3f4f6;
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.steps {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.step {
-  padding: 20px;
-  font-weight: bold;
-}
-
-/* CTA */
-.cta {
-  background: #10b981;
-  color: white;
-  text-align: center;
-  padding: 80px 20px;
-}
-
-/* FOOTER */
-.footer {
-  background: black;
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
-
-/* ANIMATIONS */
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-}
-
-.delay {
-  animation-delay: 0.5s;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
+  .landing .stats {
+    flex-wrap: wrap;
+    gap: 32px 0;
+  }
+  .landing .stats > div {
+    flex: 1 1 45%;
+  }
+  .landing .stats > div:nth-child(2)::after {
+    display: none;
   }
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .feature-container,
-  .steps {
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 520px) {
+  .landing .stats > div {
+    flex: 1 1 100%;
   }
-
-  .hero h1 {
-    font-size: 32px;
+  .landing .stats > div::after {
+    display: none;
   }
 }

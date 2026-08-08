@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { allExp } from '../../services/expenseService'
 import { deleteExpense } from '../../services/expenseService';
 import NavBar from '../../components/NavBar/DashboardNavbar'
-import './Expenses.css'
+import styles from './Expenses.module.css'
 
 const Expenses = () => {
     const [expenses, setExpenses] = useState([])
@@ -51,10 +51,10 @@ const Expenses = () => {
         <>
             <NavBar />
 
-            <div className="expenses-container">
+            <div className={styles['expenses-container']}>
 
                 {/* HEADER */}
-                <div className="expenses-header">
+                <div className={styles['expenses-header']}>
                     <div>
                         <h2>Expenses</h2>
                         <p>View and manage all your expenses</p>
@@ -62,7 +62,7 @@ const Expenses = () => {
                 </div>
 
                 {/* FILTERS */}
-                <div className="expenses-filters">
+                <div className={styles['expenses-filters']}>
                     <input type="text" placeholder="Search expense..." />
 
                     {/* CATEGORY */}
@@ -110,12 +110,12 @@ const Expenses = () => {
 
 
                 {/* LIST */}
-                <div className="expenses-list">
+                <div className={styles['expenses-list']}>
 
                     {filteredExpenses.map((item) => (
-                        <div className="expense-item" key={item._id}>
+                        <div className={styles['expense-item']} key={item._id}>
 
-                            <div className="expense-left">
+                            <div className={styles['expense-left']}>
                                 <h4>{item.title}</h4>
                                 <span>
                                     {item.category} •{" "}
@@ -127,8 +127,8 @@ const Expenses = () => {
                                 </span>
                             </div>
 
-                            <div className="expense-right">
-                                <span className="amount">₹{item.amount}</span>
+                            <div className={styles['expense-right']}>
+                                <span className={styles.amount}>₹{item.amount}</span>
                                 <button title="Edit">✏️</button>
                                 <button title="Delete" onClick={() => handleDelete(item._id)}>
                                     🗑️

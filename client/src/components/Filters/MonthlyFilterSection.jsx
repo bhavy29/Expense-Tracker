@@ -114,9 +114,7 @@ const MonthlyFilterSection = () => {
             </ResponsiveContainer>
           </div>
         )}
-        {/* -------------- */}
-        {/* -------------- */}
-
+        
         {dataI.length === 0 ? (
           <></>
         ) : (
@@ -145,7 +143,6 @@ const MonthlyFilterSection = () => {
             </ResponsiveContainer>
           </div>
         )}
-        {/* -------------- */}
       </div>
 
     </div>

@@ -1,12 +1,13 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo6.png'
 
 import './NavBar.css'
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <nav className="navbar">
-        {/* LEFT */}
+      {/* LEFT */}
       <div className="nav-left">
         <img src={logo} alt="Logo" onClick={() => navigate('/dashboard')} />
       </div>

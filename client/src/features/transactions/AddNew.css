@@ -1,93 +1,208 @@
+/* ==========================================================================
+   Add New — Expense / Income
+   Same "Private Ledger" system. Follows the Transactions page convention
+   (emerald = income, clay-red = expense) rather than StatCards' gold
+   highlight, since this is a debit/credit signal, not an attention cue.
+
+   NOTE: AddExpense / AddIncome aren't shown, so the rules below target
+   plain form elements (label, input, select, textarea, button) scoped
+   under .addnew-card. If those components already wrap fields in their
+   own classes, these element selectors still apply (lower specificity,
+   won't conflict) — but any custom class names in there won't
+   automatically pick up this look without matching selectors added.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg:            #0A0D12;
+  --bg-raised:     #12161D;
+  --bg-input:      #171B24;
+  --ink:           #F1EEE4;
+  --ink-muted:     #9297A1;
+  --ink-faint:     #565B65;
+  --gold:          #C9A961;
+  --gold-bright:   #E7C98A;
+  --emerald:       #3C7A67;
+  --emerald-bright:#5FA88F;
+  --error:         #E08A7D;
+  --rule:          rgba(201, 169, 97, 0.14);
+  --rule-strong:   rgba(201, 169, 97, 0.32);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
+}
+
 .addnew-page {
   min-height: 100vh;
-  background: #f5f7fb;
+  background: var(--bg);
 }
 
-/* CENTER CONTENT */
+.addnew-page * { box-sizing: border-box; }
+
 .addnew-wrapper {
-  max-width: 920px;
-  margin: 40px auto;
-  padding: 0 16px;
-
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 56px) 24px 80px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
 }
 
-/* CARD */
+/* --------------------------------------------------------------------------
+   Card shell
+   -------------------------------------------------------------------------- */
+
 .addnew-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 28px 26px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
+  position: relative;
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 32px 28px;
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.6);
 }
 
-.addnew-card:hover {
-  transform: translateY(-2px);
+.addnew-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
 }
 
-/* HEADINGS */
-.addnew-card h2 {
-  text-align: center;
-  font-size: 22px;
+.expense-card::before {
+  background: linear-gradient(90deg, transparent, var(--error), transparent);
+}
+
+.income-card::before {
+  background: linear-gradient(90deg, transparent, var(--emerald-bright), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Generic form elements (scoped to whatever the child components render)
+   -------------------------------------------------------------------------- */
+
+.addnew-card h1,
+.addnew-card h2,
+.addnew-card h3 {
+  font-family: var(--font-display);
   font-weight: 600;
-  margin-bottom: 22px;
+  font-size: 20px;
+  color: var(--ink);
+  margin: 0 0 20px;
 }
 
-/* INPUTS */
+.addnew-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.addnew-card label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
 .addnew-card input,
-.addnew-card select {
+.addnew-card select,
+.addnew-card textarea {
   width: 100%;
-  height: 46px;
-  padding: 0 14px;
-  margin-bottom: 14px;
-  border-radius: 10px;
-  border: 1px solid #e2e5ec;
+  background: var(--bg-input);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: var(--font-body);
   font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.addnew-card input::placeholder,
+.addnew-card textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+.addnew-card select {
+  color-scheme: dark;
 }
 
 .addnew-card input:focus,
-.addnew-card select:focus {
-  outline: none;
-  border-color: #6366f1;
+.addnew-card select:focus,
+.addnew-card textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.12);
 }
 
-/* BUTTON */
-.addnew-card button {
-  margin-top: 10px;
-  height: 46px;
-  width: 100%;
-  border-radius: 12px;
-  border: none;
+.addnew-card textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.addnew-card button[type="submit"],
+.addnew-card button.submit {
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
   font-weight: 600;
-  font-size: 15px;
+  color: #14110A;
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* EXPENSE */
-.expense-card h2 {
-  color: #ef4444;
+.expense-card button[type="submit"],
+.expense-card button.submit {
+  background: linear-gradient(180deg, #EAA598, var(--error));
+  box-shadow: 0 16px 36px -16px rgba(224, 138, 125, 0.5);
 }
 
-.expense-card button {
-  background: #ef4444;
-  color: white;
+.income-card button[type="submit"],
+.income-card button.submit {
+  background: linear-gradient(180deg, var(--emerald-bright), var(--emerald));
+  box-shadow: 0 16px 36px -16px rgba(60, 122, 103, 0.5);
+  color: #0B1512;
 }
 
-/* INCOME */
-.income-card h2 {
-  color: #22c55e;
+.addnew-card button[type="submit"]:hover,
+.addnew-card button.submit:hover {
+  transform: translateY(-1px);
 }
 
-.income-card button {
-  background: #22c55e;
-  color: white;
+.addnew-card button:focus-visible,
+.addnew-card input:focus-visible,
+.addnew-card select:focus-visible {
+  outline: 1.5px solid var(--gold-bright);
+  outline-offset: 2px;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
+@media (prefers-reduced-motion: reduce) {
+  .addnew-card * { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 780px) {
   .addnew-wrapper {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .addnew-card {
+    padding: 26px 20px;
   }
 }

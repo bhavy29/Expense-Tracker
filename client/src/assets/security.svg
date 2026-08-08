@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-labelledby="securityTitle">
+  <title id="securityTitle">Security shield icon</title>
+  <rect width="240" height="240" rx="24" fill="#0f172a" />
+  <path d="M120 42c-28 0-56 14-56 44v40c0 35 35 72 56 82 21-10 56-47 56-82v-40c0-30-28-44-56-44Z" fill="#38bdf8" stroke="#f8fafc" stroke-width="8" />
+  <path d="M96 120l16 16 32-32" stroke="#0f172a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+</svg>

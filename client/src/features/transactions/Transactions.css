@@ -1,48 +1,147 @@
-.transactions-page {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
+  /* ==========================================================================
+    Transactions
+    Same "Private Ledger" system — this page leans into the ledger
+    metaphor most directly: each transaction is a row with a hairline
+    rule, a mono tabular amount, and a debit/credit color convention
+    (emerald for income, clay-red for expense) rather than the gold
+    accent used elsewhere, since +/- red-green is the universal signal
+    for money in and money out.
+    ========================================================================== */
 
-.transactions-page h2 {
-  margin-bottom: 20px;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-.transaction-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  :root {
+    --bg:            #0A0D12;
+    --bg-raised:     #12161D;
+    --bg-raised-2:   #171C25;
+    --ink:           #F1EEE4;
+    --ink-muted:     #9297A1;
+    --ink-faint:     #565B65;
+    --gold:          #C9A961;
+    --gold-bright:   #E7C98A;
+    --emerald-bright:#5FA88F;
+    --error:         #E08A7D;
+    --rule:          rgba(201, 169, 97, 0.14);
+    --rule-strong:   rgba(201, 169, 97, 0.32);
 
-  padding: 16px 20px;
-  margin-bottom: 12px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
+  }
 
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  .transactions-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(32px, 5vw, 56px) 24px 80px;
+  }
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-}
+  .transactions-page * { box-sizing: border-box; }
 
-.transaction-left h4 {
-  margin-bottom: 4px;
-}
+  .transactions-page h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--ink);
+    margin: 0 0 28px;
+  }
 
-.transaction-left p {
-  font-size: 13px;
-  color: #6b7280;
-}
+  /* empty state */
+  .transactions-page > p {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink-faint);
+    text-align: center;
+    padding: 48px 0;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+  }
 
-.transaction-right {
-  font-weight: 600;
-  font-size: 15px;
-}
+  /* --------------------------------------------------------------------------
+    Transaction row
+    -------------------------------------------------------------------------- */
 
-/* Income */
-.transaction-right.income {
-  color: #16a34a;
-}
+  .transaction-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 4px;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s ease;
+  }
 
-/* Expense */
-.transaction-right.expense {
-  color: #dc2626;
-}
+  .transaction-card:first-of-type {
+    border-top: 1px solid var(--rule);
+  }
+
+  .transaction-card:hover {
+    background: var(--bg-raised);
+  }
+
+  .transaction-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .transaction-left h4 {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .transaction-left p {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  .transaction-right {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 15.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .transaction-right.income {
+    color: var(--emerald-bright);
+  }
+
+  .transaction-right.expense {
+    color: var(--error);
+  }
+
+  /* --------------------------------------------------------------------------
+    Focus
+    -------------------------------------------------------------------------- */
+
+  .transaction-card:focus-within {
+    outline: 1.5px solid var(--gold-bright);
+    outline-offset: -1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .transaction-card { transition: none; }
+  }
+
+  /* --------------------------------------------------------------------------
+    Responsive
+    -------------------------------------------------------------------------- */
+
+  @media (max-width: 480px) {
+    .transaction-left h4 {
+      max-width: 46vw;
+    }
+    .transaction-right {
+      font-size: 14px;
+    }
+  }

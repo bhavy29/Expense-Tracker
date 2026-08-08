@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/DashboardNavbar'
 import { income } from '../../services/incomeService'
 import { deleteIncome } from '../../services/incomeService';
-import './Income.css'
+import styles from './Income.module.css'
 
 const Incomes = () => {
   const [incomes, setIncomes] = useState([])
@@ -52,10 +52,10 @@ const Incomes = () => {
     <>
       <NavBar />
 
-      <div className="expenses-container">
+      <div className={styles['expenses-container']}>
 
         {/* HEADER */}
-        <div className="expenses-header">
+        <div className={styles['expenses-header']}>
           <div>
             <h2>Incomes</h2>
             <p>View and manage all your incomes</p>
@@ -63,7 +63,7 @@ const Incomes = () => {
         </div>
 
         {/* FILTERS */}
-        <div className="expenses-filters">
+        <div className={styles['expenses-filters']}>
           <input type="text" placeholder="Search income..." />
 
           {/* CATEGORY */}
@@ -103,11 +103,11 @@ const Incomes = () => {
         </div>
 
         {/* LIST */}
-        <div className="expenses-list">
+        <div className={styles['expenses-list']}>
           {filteredIncomes.map((item) => (
-            <div className="expense-item" key={item._id}>
+            <div className={styles['expense-item']} key={item._id}>
 
-              <div className="expense-left">
+              <div className={styles['expense-left']}>
                 <h4>{item.title}</h4>
                 <span>
                   {item.category} •{" "}
@@ -119,8 +119,8 @@ const Incomes = () => {
                 </span>
               </div>
 
-              <div className="expense-right">
-                <span className="amount">₹{item.amount}</span>
+              <div className={styles['expense-right']}>
+                <span className={styles.amount}>₹{item.amount}</span>
                 <button title="Edit">✏️</button>
                 <button
                   title="Delete"

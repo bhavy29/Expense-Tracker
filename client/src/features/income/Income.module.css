@@ -1,12 +1,7 @@
+/* PAGE CONTAINER */
 /* ==========================================================================
-   Expenses
-   Same "Private Ledger" system as Transactions — but this page is a
-   working register, not just a read-out, so it carries more surface:
-   a filter bar (search / category / month / year) framed as a single
-   raised control strip, then the same hairline-rule row list. Amounts
-   stay in the mono face for tabular alignment; edit/delete sit as
-   quiet icon-only actions that only fully appear on row hover, so the
-   ledger reads clean until you need to act on a line.
+   Income (CSS Module)
+   Based on Expenses.module.css but adjusted for income visuals (green amounts)
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
@@ -67,7 +62,7 @@
   margin: 0;
 }
 
-/* secondary heading, e.g. "Expenses — August" */
+/* secondary heading, e.g. "Incomes — August" */
 .expenses-container > h2 {
   font-family: var(--font-mono);
   font-weight: 500;
@@ -160,7 +155,6 @@
   transition: background 0.15s ease;
 }
 
-/* Ensure these rules win over other pages that reuse the same class names */
 .expenses-container .expense-item {
   background: transparent;
   border-radius: 0;
@@ -216,7 +210,7 @@
   font-weight: 600;
   font-size: 15.5px;
   font-variant-numeric: tabular-nums;
-  color: var(--error);
+  color: var(--emerald-bright);
   min-width: 76px;
   text-align: right;
 }
@@ -259,7 +253,7 @@
    -------------------------------------------------------------------------- */
 
 .expenses-list:empty::after {
-  content: "No expenses match these filters.";
+  content: "No incomes match these filters.";
   display: block;
   font-family: var(--font-body);
   font-size: 14.5px;

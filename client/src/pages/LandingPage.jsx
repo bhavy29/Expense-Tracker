@@ -1,62 +1,208 @@
-import Navbar from "../components/NavBar/LandingNavbar";
-import HeroSection from "./HeroSection";
-import "./LandingPage.css";
+import React from 'react'
+import Navbar from '../components/NavBar/LandingNavbar'
+import HeroSection from './HeroSection'
+import dashboardPreview from '../assets/dashboard-preview.png'
+import analyticsIcon from '../assets/analytics.jpg'
+import securityIcon from '../assets/security.jpg'
+import './LandingPage.css'
 
 const LandingPage = () => {
-  return (
-    <div className="landing">
+    return (
+        <div className="landing">
 
-      <Navbar />
+            <Navbar />
 
-      {/* HERO */}
-      <HeroSection />
+            <HeroSection />
 
-      {/* FEATURES */}
-      <section id="features" className="features">
-        <h2>Features</h2>
+            {/* Premium Statement */}
 
-        <div className="feature-container">
-          <div className="card">
-            <h3>📊 Analytics</h3>
-            <p>Understand where your money goes.</p>
-          </div>
+            <section className="headline">
 
-          <div className="card">
-            <h3>🔔 Smart Alerts</h3>
-            <p>Get notified on overspending.</p>
-          </div>
+                <p className="mini-title">
+                    Simplicity. Intelligence. Control.
+                </p>
 
-          <div className="card">
-            <h3>📱 Responsive</h3>
-            <p>Use on mobile, tablet, desktop.</p>
-          </div>
+                <h2>
+                    Everything you need
+                    to master your money.
+                </h2>
+
+                <p>
+                    Built with modern technologies and
+                    designed to make finance effortless.
+                </p>
+
+            </section>
+
+            {/* Huge Dashboard */}
+
+            <section className="dashboard">
+
+                <img src={dashboardPreview} alt="Dashboard preview" />
+
+            </section>
+
+            {/* Feature 1 */}
+
+            <section className="feature-row">
+
+                <div>
+
+                    <span>Analytics</span>
+
+                    <h2>
+                        See where every
+                        dollar goes.
+                    </h2>
+
+                    <p>
+                        Beautiful charts transform
+                        raw transactions into insights.
+                    </p>
+
+                </div>
+
+                <img src={analyticsIcon} alt="Analytics illustration" />
+
+            </section>
+
+            {/* Feature 2 */}
+
+            <section className="feature-row reverse">
+
+                <img src={securityIcon} alt="Security illustration" />
+
+                <div>
+
+                    <span>Security</span>
+
+                    <h2>
+                        Your data stays
+                        yours.
+                    </h2>
+
+                    <p>
+                        JWT authentication,
+                        encrypted storage and
+                        secure architecture.
+                    </p>
+
+                </div>
+
+            </section>
+
+            {/* Bento Grid */}
+
+            <section className="bento">
+
+                <div className="large-card">
+
+                    <h3>
+                        Smart Reports
+                    </h3>
+
+                    <p>
+                        Export PDF reports instantly.
+                    </p>
+
+                </div>
+
+                <div className="small-card">
+
+                    <h3>
+                        Fast
+                    </h3>
+
+                </div>
+
+                <div className="small-card">
+
+                    <h3>
+                        Responsive
+                    </h3>
+
+                </div>
+
+                <div className="wide-card">
+
+                    <h3>
+                        Monthly Insights
+                    </h3>
+
+                </div>
+
+            </section>
+
+            {/* Numbers */}
+
+            <section className="stats">
+
+                <div>
+
+                    <h1>99.9%</h1>
+
+                    <p>Availability</p>
+
+                </div>
+
+                <div>
+
+                    <h1>256-bit</h1>
+
+                    <p>Encryption</p>
+
+                </div>
+
+                <div>
+
+                    <h1>Redis</h1>
+
+                    <p>Lightning Fast</p>
+
+                </div>
+
+            </section>
+
+            {/* Quote */}
+
+            <section className="quote">
+
+                <h2>
+
+                    "The easiest way
+                    to understand
+                    your finances."
+
+                </h2>
+
+            </section>
+
+            {/* CTA */}
+
+            <section className="cta">
+
+                <h2>
+
+                    Ready to start?
+
+                </h2>
+
+                <button>
+
+                    Get Started
+
+                </button>
+
+            </section>
+
+            <footer>
+
+                ©2026 Expense Tracker
+
+            </footer>
+
         </div>
-      </section>
+    )
+}
 
-      {/* HOW IT WORKS */}
-      <section id="how" className="how">
-        <h2>How It Works</h2>
-
-        <div className="steps">
-          <div className="step">1️⃣ Add Expenses</div>
-          <div className="step">2️⃣ Analyze Spending</div>
-          <div className="step">3️⃣ Save Money</div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="cta" className="cta">
-        <h2>Start Managing Your Money 🚀</h2>
-        <button className="btn">Get Started Free</button>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="footer">
-        <p>© 2026 Expense Tracker | Built by Bhavy</p>
-      </footer>
-
-    </div>
-  );
-};
-
-export default LandingPage;
+export default LandingPage

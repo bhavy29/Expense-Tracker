@@ -2,7 +2,7 @@ import { Link, useNavigate, NavLink } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import avatar from '../../assets/avatar.webp'
 import logo from '../../assets/logo6.png'
-import './NavBar.css'
+import './DashboardNavBar.css'
 import { logout, getMe } from '../../services/authService'
 
 const DashboardNavbar = () => {
@@ -47,7 +47,7 @@ const DashboardNavbar = () => {
       <div className="nav-center">
         <NavLink to="/dashboard" className="nav-link">
           Overview
-        </NavLink>  
+        </NavLink>
         <NavLink to="/transactions" className="nav-link">
           Transactions
         </NavLink>
